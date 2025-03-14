@@ -6,6 +6,7 @@ Deploy a Wazuh cluster with a basic indexer and dashboard stack on Kubernetes.
 
 ## Directory structure
 
+```
 ├── README.md
 └── wazuh
     ├── certs
@@ -26,6 +27,7 @@ Deploy a Wazuh cluster with a basic indexer and dashboard stack on Kubernetes.
     ├── wazuh-master-svc.yaml
     ├── wazuh-worker-sts.yaml
     └── wazuh-workers-svc.yaml    
+```
 
 ## Credits and Thank you
 
