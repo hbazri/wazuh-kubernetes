@@ -1,17 +1,7 @@
-# Copyright (C) 2019, Wazuh Inc.
-#
-# This program is a free software; you can redistribute it
-# and/or modify it under the terms of the GNU General Public
-# License (version 2) as published by the FSF - Free Software
-# Foundation.
-
-# Dashboard Deployment
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: wazuh-dashboard
-  namespace: wazuh
 spec:
   replicas: 1
   selector:
@@ -32,7 +22,7 @@ spec:
             secretName: dashboard-certs
       containers:
         - name: wazuh-dashboard
-          image: 'wazuh/wazuh-dashboard:5.0.0'
+          image: 'wazuh/wazuh-dashboard:4.11.0'
           resources:
             limits:
               cpu: 500m
@@ -43,13 +33,13 @@ spec:
               subPath: opensearch_dashboards.yml
               readOnly: false
             - name: dashboard-certs
-              mountPath: /usr/share/wazuh-dashboard/certs/cert.pem
+              mountPath: /usr/share/wazuh-dashboard/certs/dashboard.pem
               readOnly: true
-              subPath: cert.pem
+              subPath: dashboard.pem
             - name: dashboard-certs
-              mountPath: /usr/share/wazuh-dashboard/certs/key.pem
+              mountPath: /usr/share/wazuh-dashboard/certs/dashboard-key.pem
               readOnly: true
-              subPath: key.pem
+              subPath: dashboard-key.pem
             - name: dashboard-certs
               mountPath: /usr/share/wazuh-dashboard/certs/root-ca.pem
               subPath: root-ca.pem
@@ -83,11 +73,11 @@ spec:
             - name: SERVER_SSL_ENABLED
               value: "true"
             - name: SERVER_SSL_CERTIFICATE
-              value: /usr/share/wazuh-dashboard/certs/cert.pem
+              value: /usr/share/wazuh-dashboard/certs/dashboard.pem
             - name: SERVER_SSL_KEY
-              value: /usr/share/wazuh-dashboard/certs/key.pem
+              value: /usr/share/wazuh-dashboard/certs/dashboard-key.pem
             - name: WAZUH_API_URL
-              value: https://wazuh-manager-master-0.wazuh-cluster
+              value: https://wazuh
             - name: API_USERNAME
               valueFrom:
                 secretKeyRef:
